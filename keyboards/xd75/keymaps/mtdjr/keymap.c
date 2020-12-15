@@ -1,135 +1,37 @@
-/* Copyright 2017 Wunder
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 2 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
- */
-#include "xd75.h"
-#include "action_layer.h"
-
-
-enum custom_keycodes {
-  // TD_ESC = 0,
-  TD_LOCK = 0,
-};
-
-// Layers
-#define _QWERTY 0
-#define _LOWER  1
-#define _RAISE  2
-
-
-
-// Shortcuts
-#define KC_____ KC_NO
-#define KC_     KC_TRNS
-#define KC_RST  RESET
-#define KC_RASE MO(_RAISE)
-#define KC_LOWR MO(_LOWER)
-
-// RGB and Backlighting
-#define KC_RGB  RGB_TOG
-#define KC_RHUI RGB_HUI
-#define KC_RHUD RGB_HUD
-#define KC_RSAI RGB_SAI
-#define KC_RSAD RGB_SAD
-#define KC_RVAI RGB_VAI
-#define KC_RVAD RGB_VAD
-#define KC_BLT  BL_TOGG
-#define KC_BLS  BL_STEP
-#define KC_BLI  BL_INC
-#define KC_BLD  BL_DEC
-
-// Tapdance
-//#define KC_EXC TD(TD_ESC)
-#define KC_LOCK TD(TD_LOCK)
-
-// Macros
-#define KC_ROOT M(0)
-#define KC_PPLY M(1)
-#define KC_PSEF M(2)
+#include QMK_KEYBOARD_H
+#include "mtdjr.h"
 
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
+    [_QWERTY] = LAYOUT_ortho_5x15(
+        KC_EXC,  KC_1,    KC_2,    KC_3,    KC_4,    KC_5,    KC_PGUP, KC_MPNT, KC_PGDN, KC_6,    KC_7,    KC_8,    KC_9,    KC_0,    KC_BSPC,
+        KC_TAB,  KC_Q,    KC_W,    KC_E,    KC_R,    KC_T,    KC_INS,  KC_HOME, KC_DEL,  KC_Y,    KC_U,    KC_I,    KC_O,    KC_P,    KC_QUOT,
+        KC_LCTL, KC_A,    KC_S,    KC_D,    KC_F,    KC_G,    KC_EQL,  KC_ELCK, KC_MINS, KC_H,    KC_J,    KC_K,    KC_L,    KC_SCLN, KC_ENT,
+        KC_LSFT, KC_Z,    KC_X,    KC_C,    KC_V,    KC_B,    KC_LBRC, KC_BSLS, KC_RBRC, KC_N,    KC_M,    KC_COMM, KC_DOT,  KC_SLSH, KC_ELCK,
+        KC_LOWR, KC_LCTL, KC_LALT, KC_LGUI, XXXXXXX, KC_SPC,  KC_LOWR, KC_RASE, XXXXXXX, KC_SPC,  KC_APP,  KC_LEFT, KC_DOWN, KC_UP,   KC_RGHT
+    ),
 
- [_QWERTY] = KC_KEYMAP(
-//  .--------------------------------------------------------------------------.
-      ESC, 1  , 2  , 3  , 4  , 5  ,PGUP,PSCR,PGDN, 6  , 7  , 8  , 9  , 0  ,BSPC,
-//  |----+----+----+----+----+----+----+----+----+----+----+----+----+----+----|
-      TAB, Q  , W  ,  E , R  , T  , INS,BSLS, DEL, Y  , U  , I  , O  , P  ,QUOT,
-//  |----+----+----+----+----+----+----+----+----+----+----+----+----+----+----|
-     LCTL, A  , S  ,  D , F  , G  ,HOME,PLUS,LOCK, H  , J  , K  , L  ,SCLN, ENT,
-//  |----+----+----+----+----+----+----+----+----+----+----+----+----+----+----|
-     LSFT, Z  , X  ,  C , V  , B  ,LBRC,MINS,RBRC, N  , M  ,COMM, DOT,SLSH,RSFT,
-//  |----+----+----+----+----+----+----+----+----+----+----+----+----+----+----|
-     LOWR,LCTL,LALT,LGUI,____, SPC,RASE, GRV,LOWR, SPC,____,LEFT,DOWN,UP  ,RGHT
-//  '----+----+----+----+----+----+----+----+----+----+----+----+----+----+----'
-),
+    [_LOWER] = LAYOUT_ortho_5x15(
+        XXXXXXX, KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   XXXXXXX, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  KC_DEL,
+        XXXXXXX, KC_ROOT, KC_PPLY, KC_PSEF, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_CALC, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MUTE,
+        _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, KC_MPLY, XXXXXXX, KC_MNXT, KC_VOLD, KC_VOLU, KC_MNXT
+    ),
 
- [_LOWER] = KC_KEYMAP(
-//  .--------------------------------------------------------------------------.
-     ____,  F1,  F2,  F3,  F4,  F5,  F6,____,  F7,  F8,  F9, F10, F11, F12,____,
-//  |----+----+----+----+----+----+----+----+----+----+----+----+----+----+----|
-     ____,ROOT,PPLY,PSEF,____,____,____,____,____,____,____,____,____,____,____,
-//  |----+----+----+----+----+----+----+----+----+----+----+----+----+----+----|
-     ____,____,____,____,____,____,____,____,____,____,____,____,____,____,____,
-//  |----+----+----+----+----+----+----+----+----+----+----+----+----+----+----|
-     ____,____,____,____,____,____,____,____,____,____,____,____,____,____,MUTE,
-//  |----+----+----+----+----+----+----+----+----+----+----+----+----+----+----|
-         ,____,____,____,____,____,    ,____,    ,MPLY,____,MPRV,VOLD,VOLU,MNXT
-//  '----+----+----+----+----+----+----+----+----+----+----+----+----+----+----'
-),
-
-[_RAISE] = KC_KEYMAP(
-//  .--------------------------------------------------------------------------.
-     ____,____,____,____,____,____,____,____,____,____,____,____,____,____,____,
-//  |----+----+----+----+----+----+----+----+----+----+----+----+----+----+----|
-     ____,____,____,____, RST,____,____,____,____,____,____,____,____,____,____,
-//  |----+----+----+----+----+----+----+----+----+----+----+----+----+----+----|
-     CAPS,____,____,____,____,____,____, BLI,____,____,____,____,____,____,____,
-//  |----+----+----+----+----+----+----+----+----+----+----+----+----+----+----|
-      RGB,RHUI,RHUD,RSAI,RSAD,RVAI,RVAD, BLD,____,____,____,____,BTN1,BTN2,____,
-//  |----+----+----+----+----+----+----+----+----+----+----+----+----+----+----|
-         ,____,____,____,____,____,    ,____,    ,____,____,MS_L,MS_D,MS_U,MS_R
-//  '----+----+----+----+----+----+----+----+----+----+----+----+----+----+----'
-)
+    [_RAISE] = LAYOUT_ortho_5x15(
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_RST,  XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX,
+        KC_CAPS, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BLI,  XXXXXXX, KC_BLD,  XXXXXXX, XXXXXXX, XXXXXXX, KC_XLCK, XXXXXXX, XXXXXXX,
+        KC_RGB,  KC_RHUI, KC_RHUD, KC_RSAI, KC_RSAD, KC_RVAI, KC_RVAD, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_BTN1, KC_MS_U, KC_BTN2,
+        _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, _______, _______, XXXXXXX, XXXXXXX, XXXXXXX, XXXXXXX, KC_MS_L, KC_MS_D, KC_MS_R
+    )
 };
 
-qk_tap_dance_action_t tap_dance_actions[] = {
-  //Tap once for left ctrl, twice for ESC
-  //[TD_ESC] = ACTION_TAP_DANCE_DOUBLE(KC_LCTL, KC_ESC),
-  [TD_LOCK] = ACTION_TAP_DANCE_DOUBLE(KC_END, LGUI(KC_L))
-};
-void led_set_user(uint8_t usb_led) {
-    if (usb_led & (1<<USB_LED_CAPS_LOCK)) {
+bool led_update_user(led_t led_state) {
+    if (led_state.caps_lock) {
         capslock_led_on();
     } else {
         capslock_led_off();
     }
+    return false;
 }
-
-
-const macro_t *action_get_macro(keyrecord_t *record, uint8_t id, uint8_t opt) {
-  if (record->event.pressed) {
-    switch(id) {
-      case 0:
-          SEND_STRING("sudo su -\n");
-          return false; break;
-      case 1:
-          SEND_STRING("puppet apply /etc/puppetlabs/code/environments/production/manifests/site.pp\n");
-          return false; break;
-      case 2:
-          SEND_STRING("ps -ef | grep ");
-          return false; break;
-    }
-  }
-  return MACRO_NONE;
-};
